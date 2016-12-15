@@ -3,8 +3,10 @@ import os
 import os.path
 from itertools import groupby
 
+dirname = 'New_directory'
+
 def write_csv(name, headers, rows):
-	with open(name + '.csv', 'a', newline='') as outfile:
+	with open(dirname + '/' +  name + '.csv', 'a', newline='') as outfile:
 		writer = csv.writer(outfile)
 		if headers:
 			writer.writerow(headers)
@@ -76,7 +78,7 @@ def main():
 			print(tag)
 
 		print('Here are the unique tags I have found from your sheet, is this correct? (y/n)')
-		
+
 		while True:
 			answer = input()
 			if answer.lower() == 'n':
@@ -94,6 +96,9 @@ def main():
 			if len(links) == len(unique_tags):
 				break
 			print('Number of tags != number of links. Please, enter links one more time.')
+
+		if not os.path.exists(dirname):
+			os.makedirs(dirname)
 
 		process_first_cond(unique_tags, input_rows)
 		process_second_cond(unique_tags, input_rows)
